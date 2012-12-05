@@ -6,5 +6,9 @@
 package bidixon.hiitmix.echonest;
 
 public class MusicAnalyzer {
+	
+	public MusicAnalyzer() {
+		
+	}
 
 }

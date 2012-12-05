@@ -9,7 +9,7 @@ import java.util.Timer;
 
 public class IntervalTimer extends Timer {
 
-	public IntervalTimer(){
+	public IntervalTimer() {
 		
 	}
 	
