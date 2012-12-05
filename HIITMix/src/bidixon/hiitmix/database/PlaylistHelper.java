@@ -1,8 +1,6 @@
 /**
- * @author		Billy Dixon
- * @version     1.0.0
+ * 
  */
-
 package bidixon.hiitmix.database;
 
 import android.content.ContentValues;
@@ -11,33 +9,37 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class WorkoutHelper extends SQLiteOpenHelper {
+/**
+ * @author napoleon2340
+ *
+ */
+public class PlaylistHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "hiitmix_workouts.db";
+	private static final String DATABASE_NAME = "hiitmix_playlists.db";
 	private static final int SCHEMA_VERSION = 1;
 	
-	public WorkoutHelper(Context context) {
+	public PlaylistHelper(Context context) {
 		super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 	}
 
 	
-	public void insert(String name, String playlist) {
+	public void insert(String name, String tracks) {
 		ContentValues cv = new ContentValues();
 		
 		cv.put("name", name);
-		cv.put("playlist", playlist);
+		cv.put("tracks", tracks);
 		
-		getWritableDatabase().insert("hiitmix_workouts", "name", cv);
+		getWritableDatabase().insert("hiitmix_playlists", "name", cv);
 	}
 	
-	public void update(String id, String name, String playlist) {
+	public void update(String id, String name, String tracks) {
 		ContentValues cv = new ContentValues();
 		String[] args = {id};
 		
 		cv.put("name", name);
-		cv.put("playlist", playlist);
+		cv.put("tracks", tracks);
 		
-		getWritableDatabase().update("hiitmix_workouts", cv, "_ID=?", args);
+		getWritableDatabase().update("hiitmix_playlists", cv, "_ID=?", args);
 	}
 	
 	/* 
@@ -45,7 +47,7 @@ public class WorkoutHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE hiitmix_workouts (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, playlist TEXT);");
+		db.execSQL("CREATE TABLE hiitmix_playlists (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, tracks TEXT);");
 	}
 
 	/* 
@@ -57,14 +59,14 @@ public class WorkoutHelper extends SQLiteOpenHelper {
 	
 	public Cursor getById(String id) {
 		String[] args = {id};
-		return getReadableDatabase().rawQuery("SELECT _id, name, playlist FROM hiitmix_workouts WHERE _ID=?", args);
+		return getReadableDatabase().rawQuery("SELECT _id, name, tracks FROM hiitmix_playlists WHERE _ID=?", args);
 	}
 	
 	public Cursor getAll(String orderBy) {
-		return getReadableDatabase().rawQuery("SELECT _id, name, playlist FROM hiitmix_workouts ORDER BY " + orderBy, null);
+		return getReadableDatabase().rawQuery("SELECT _id, name, tracks FROM hiitmix_playlists ORDER BY " + orderBy, null);
 	}
 	
 	public String getName(Cursor c)			{ return c.getString(1); }
-	public String getPlaylist(Cursor c) 	{ return c.getString(2); }
+	public String getTracks(Cursor c) 		{ return c.getString(2); }
 
 }
