@@ -5,7 +5,9 @@
 
 package bidixon.hiitmix.domain;
 
-public class Interval {
+import java.io.Serializable;
+
+public class Interval implements Serializable {
 
 	private int duration;
 	private int intensity;

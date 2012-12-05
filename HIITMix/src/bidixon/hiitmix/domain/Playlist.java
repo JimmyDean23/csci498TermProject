@@ -5,10 +5,16 @@
 
 package bidixon.hiitmix.domain;
 
+import java.util.*;
+
 public class Playlist {
 	
+	private List<Track> tracks;
+	
 	public Playlist() {
-		
+		tracks = new ArrayList<Track>();
 	}
+	
+	
 	
 }

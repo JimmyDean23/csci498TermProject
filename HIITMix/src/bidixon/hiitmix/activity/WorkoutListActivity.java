@@ -7,6 +7,7 @@ package bidixon.hiitmix.activity;
 
 import java.util.List;
 import bidixon.hiitmix.R;
+import bidixon.hiitmix.database.*;
 import bidixon.hiitmix.domain.*;
 import android.os.Bundle;
 import android.app.Activity;
@@ -15,6 +16,7 @@ import android.view.Menu;
 public class WorkoutListActivity extends Activity {
 
 	private List<Workout> workouts;
+	private WorkoutHelper workoutHelper;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,20 @@ public class WorkoutListActivity extends Activity {
     @Override
 	public void onResume() { 
 		super.onResume();
+		workoutHelper = new WorkoutHelper(this);
 		initializeList(); 
+	}
+    
+    @Override
+	public void onPause() { 
+    	workoutHelper.close();
+		super.onPause(); 
+	}
+    
+    @Override
+	public void onDestroy() { 
+    	workoutHelper.close();
+		super.onDestroy(); 
 	}
 
     private void initializeList() {

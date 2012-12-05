@@ -1,6 +1,8 @@
 /**
- * 
+ * @author		Billy Dixon
+ * @version     1.0.0
  */
+
 package bidixon.hiitmix.database;
 
 import android.content.ContentValues;
@@ -9,10 +11,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * @author napoleon2340
- *
- */
 public class PlaylistHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "hiitmix_playlists.db";
