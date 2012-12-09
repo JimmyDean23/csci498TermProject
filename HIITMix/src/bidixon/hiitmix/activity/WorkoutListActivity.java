@@ -5,18 +5,19 @@
 
 package bidixon.hiitmix.activity;
 
-import java.util.List;
+import java.util.*;
+import com.db4o.*;
 import bidixon.hiitmix.R;
-import bidixon.hiitmix.database.*;
 import bidixon.hiitmix.domain.*;
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
+import android.app.*;
+import android.view.*;
+import android.widget.*;
 
 public class WorkoutListActivity extends Activity {
 
 	private List<Workout> workouts;
-	private WorkoutHelper workoutHelper;
+	private ListView listView;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,33 +26,42 @@ public class WorkoutListActivity extends Activity {
     }
     
     @Override
-	public void onResume() { 
+	public void onResume() {
 		super.onResume();
-		workoutHelper = new WorkoutHelper(this);
 		initializeList(); 
 	}
     
     @Override
-	public void onPause() { 
-    	workoutHelper.close();
+	public void onPause() {
 		super.onPause(); 
 	}
     
     @Override
-	public void onDestroy() { 
-    	workoutHelper.close();
+	public void onDestroy() {
 		super.onDestroy(); 
 	}
 
     private void initializeList() {
-		
+    	ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded
+    	        .newConfiguration(), this.getDir("data", 0) + "/WorkoutDatabase.db4o");
+    	try {
+    		listView = (ListView) findViewById(R.id.workout_list);
+    		Workout w = new Workout();
+    		w.setName("Test");
+    		db.store(w);
+    		workouts = new ArrayList<Workout>();
+    		workouts.add(w);
+    	    ArrayAdapter<Workout> adapter = new ArrayAdapter<Workout>(this, android.R.layout.simple_list_item_1, workouts);
+    	    listView.setAdapter(adapter);
+    	} finally {
+    	    db.close();
+    	}
 	}
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_workout_list, menu);
         return true;
     }
-    
+	
 }

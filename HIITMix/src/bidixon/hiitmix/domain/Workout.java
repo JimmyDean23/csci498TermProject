@@ -11,6 +11,7 @@ public class Workout {
 
 	private List<Interval> intervals;
 	private Playlist playlist;
+	private String name;
 	
 	public Workout() {
 		intervals = new ArrayList<Interval>();
@@ -30,6 +31,27 @@ public class Workout {
 		Interval i = intervals.get(newIndex);
 		intervals.set(newIndex, intervals.get(oldIndex));
 		intervals.set(oldIndex, i);
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void addPlaylist(Playlist playlist) {
+		this.playlist = playlist;
+	}
+	
+	public String getPlaylist() {
+		return playlist.getName();
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 	
 }

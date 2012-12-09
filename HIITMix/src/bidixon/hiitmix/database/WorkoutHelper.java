@@ -60,8 +60,8 @@ public class WorkoutHelper extends SQLiteOpenHelper {
 		return getReadableDatabase().rawQuery("SELECT _id, name, playlist FROM hiitmix_workouts WHERE _ID=?", args);
 	}
 	
-	public Cursor getAll(String orderBy) {
-		return getReadableDatabase().rawQuery("SELECT _id, name, playlist FROM hiitmix_workouts ORDER BY " + orderBy, null);
+	public Cursor getAll() {
+		return getReadableDatabase().rawQuery("SELECT _id, name, playlist FROM hiitmix_workouts ORDER BY name", null);
 	}
 	
 	public String getName(Cursor c)			{ return c.getString(1); }
