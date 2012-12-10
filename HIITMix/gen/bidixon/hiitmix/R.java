@@ -16,14 +16,16 @@ public final class R {
     public static final class id {
         public static final int duration_edit=0x7f070001;
         public static final int duration_text=0x7f070000;
+        public static final int header_playlist=0x7f070008;
+        public static final int header_workout=0x7f070007;
         public static final int intensity_edit=0x7f070003;
         public static final int intensity_text=0x7f070002;
         public static final int interval_list=0x7f070005;
-        public static final int menu_settings=0x7f070009;
-        public static final int playlist_name=0x7f070008;
+        public static final int menu_settings=0x7f07000b;
+        public static final int playlist_name=0x7f07000a;
         public static final int save=0x7f070004;
         public static final int workout_list=0x7f070006;
-        public static final int workout_name=0x7f070007;
+        public static final int workout_name=0x7f070009;
     }
     public static final class layout {
         public static final int activity_interval_edit=0x7f030000;
@@ -31,7 +33,8 @@ public final class R {
         public static final int activity_playlist=0x7f030002;
         public static final int activity_timer=0x7f030003;
         public static final int activity_workout_list=0x7f030004;
-        public static final int row=0x7f030005;
+        public static final int header=0x7f030005;
+        public static final int row=0x7f030006;
     }
     public static final class menu {
         public static final int activity_workout_list=0x7f060000;
@@ -43,7 +46,9 @@ public final class R {
         public static final int intensity=0x7f040004;
         public static final int menu_settings=0x7f040002;
         public static final int notset=0x7f040006;
+        public static final int playlist=0x7f040008;
         public static final int save=0x7f040003;
+        public static final int workout=0x7f040007;
     }
     public static final class style {
         /** 

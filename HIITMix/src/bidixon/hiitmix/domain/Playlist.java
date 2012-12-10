@@ -9,8 +9,8 @@ import java.util.*;
 
 public class Playlist {
 	
-	private List<Track> tracks;
-	private String name;
+	private List<Track> tracks = null;
+	private String name = null;
 	
 	public Playlist() {
 		tracks = new ArrayList<Track>();

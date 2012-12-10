@@ -9,9 +9,9 @@ import java.util.*;
 
 public class Workout {
 
-	private List<Interval> intervals;
-	private Playlist playlist;
-	private String name;
+	private List<Interval> intervals = null;
+	private Playlist playlist = null;
+	private String name = null;
 	
 	public Workout() {
 		intervals = new ArrayList<Interval>();

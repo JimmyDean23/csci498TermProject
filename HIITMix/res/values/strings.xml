@@ -8,5 +8,7 @@
     <string name="intensity">Intensity</string>
     <string name="duration">Duration</string>
     <string name="notset">Click edit to add a playlist</string>
+    <string name="workout">Workout</string>
+    <string name="playlist">Playlist</string>
 
 </resources>

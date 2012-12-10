@@ -19,19 +19,19 @@ import android.widget.*;
 
 public class WorkoutListActivity extends Activity {
 
-	private List<Workout> workouts;
-	private ListView listView;
+	private List<Workout> workouts = null;
+	private ListView listView = null;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_list);
+        initializeList();
     }
     
     @Override
 	public void onResume() {
-		super.onResume();
-		initializeList(); 
+		super.onResume();		 
 	}
     
     @Override
@@ -50,6 +50,8 @@ public class WorkoutListActivity extends Activity {
     	        .newConfiguration(), this.getDir("data", 0) + "/WorkoutDatabase.db4o");
     	try {
     		listView = (ListView) findViewById(R.id.workout_list);
+    		View header = (View)getLayoutInflater().inflate(R.layout.header, null);
+            
     		Workout w = new Workout();
     		Workout w1 = new Workout();
     		Workout w2 = new Workout();
@@ -69,7 +71,9 @@ public class WorkoutListActivity extends Activity {
     		for (Workout i : list) {
     			workouts.add(i);
     		}
-    	    ArrayAdapter<Workout> adapter = new ArrayAdapter<Workout>(this, android.R.layout.simple_list_item_1, workouts);
+    	    WorkoutAdapter adapter = new WorkoutAdapter(this, R.layout.row, workouts);
+    	    
+    	    listView.addHeaderView(header, null, false);
     	    listView.setAdapter(adapter);
     	} finally {
     	    db.close();
@@ -91,6 +95,7 @@ public class WorkoutListActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View row = convertView;
+			
 			WorkoutHolder holder = null;
 	        
 	        if (row == null) {
@@ -106,7 +111,9 @@ public class WorkoutListActivity extends Activity {
 	        
 	        Workout workout_cursor = workouts.get(position);
 	        holder.name.setText(workout_cursor.getName());
-	        holder.playlist.setText(workout_cursor.getPlaylist());
+	        if (workout_cursor.getPlaylist() != null) {
+	        	holder.playlist.setText(workout_cursor.getPlaylist());
+	        }	        
 	        
 	        return row;
 		}
@@ -115,8 +122,8 @@ public class WorkoutListActivity extends Activity {
 	
 	static class WorkoutHolder {
 		
-        private TextView name;
-        private TextView playlist;
+        private TextView name = null;
+        private TextView playlist = null;
         
         public WorkoutHolder(View row) {
         	name = (TextView) row.findViewById(R.id.workout_name);
