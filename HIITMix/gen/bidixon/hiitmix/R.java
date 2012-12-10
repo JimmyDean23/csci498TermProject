@@ -20,10 +20,10 @@ public final class R {
         public static final int intensity_text=0x7f070002;
         public static final int interval_list=0x7f070005;
         public static final int menu_settings=0x7f070009;
-        public static final int playlist=0x7f070008;
+        public static final int playlist_name=0x7f070008;
         public static final int save=0x7f070004;
-        public static final int title=0x7f070007;
         public static final int workout_list=0x7f070006;
+        public static final int workout_name=0x7f070007;
     }
     public static final class layout {
         public static final int activity_interval_edit=0x7f030000;

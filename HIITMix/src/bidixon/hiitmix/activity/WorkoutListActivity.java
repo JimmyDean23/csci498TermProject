@@ -5,12 +5,15 @@
 
 package bidixon.hiitmix.activity;
 
+import java.io.File;
 import java.util.*;
+
 import com.db4o.*;
 import bidixon.hiitmix.R;
 import bidixon.hiitmix.domain.*;
 import android.os.Bundle;
 import android.app.*;
+import android.content.Context;
 import android.view.*;
 import android.widget.*;
 
@@ -42,15 +45,30 @@ public class WorkoutListActivity extends Activity {
 	}
 
     private void initializeList() {
+    	new File(this.getDir("data", 0) + "/WorkoutDatabase.db4o").delete();
     	ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded
     	        .newConfiguration(), this.getDir("data", 0) + "/WorkoutDatabase.db4o");
     	try {
     		listView = (ListView) findViewById(R.id.workout_list);
     		Workout w = new Workout();
-    		w.setName("Test");
+    		Workout w1 = new Workout();
+    		Workout w2 = new Workout();
+    		Playlist p = new Playlist();
+    		p.setName("Muzik");
+    		
+    		w.setName("I");
+    		w.addPlaylist(p);
     		db.store(w);
+    		w1.setName("<3");
+    		db.store(w1);
+    		w2.setName("Jiyoon");
+    		db.store(w2);
+    		
     		workouts = new ArrayList<Workout>();
-    		workouts.add(w);
+    		List<Workout> list = db.query(Workout.class);
+    		for (Workout i : list) {
+    			workouts.add(i);
+    		}
     	    ArrayAdapter<Workout> adapter = new ArrayAdapter<Workout>(this, android.R.layout.simple_list_item_1, workouts);
     	    listView.setAdapter(adapter);
     	} finally {
@@ -62,6 +80,49 @@ public class WorkoutListActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_workout_list, menu);
         return true;
+    }
+	
+	private class WorkoutAdapter extends ArrayAdapter<Workout> {
+
+		public WorkoutAdapter(Context context, int textViewResourceId, List<Workout> objects) {
+			super(context, textViewResourceId, objects);
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View row = convertView;
+			WorkoutHolder holder = null;
+	        
+	        if (row == null) {
+	        	LayoutInflater inflater = getLayoutInflater();
+	            row = inflater.inflate(R.layout.row, parent, false);
+	            
+	            holder = new WorkoutHolder(row);
+	            
+	            row.setTag(holder);
+	        } else {
+	            holder = (WorkoutHolder) row.getTag();
+	        }
+	        
+	        Workout workout_cursor = workouts.get(position);
+	        holder.name.setText(workout_cursor.getName());
+	        holder.playlist.setText(workout_cursor.getPlaylist());
+	        
+	        return row;
+		}
+		
+	}
+	
+	static class WorkoutHolder {
+		
+        private TextView name;
+        private TextView playlist;
+        
+        public WorkoutHolder(View row) {
+        	name = (TextView) row.findViewById(R.id.workout_name);
+        	playlist = (TextView) row.findViewById(R.id.playlist_name);
+		}
+        
     }
 	
 }
