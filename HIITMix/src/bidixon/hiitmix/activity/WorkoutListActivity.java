@@ -7,13 +7,12 @@ package bidixon.hiitmix.activity;
 
 import java.io.File;
 import java.util.*;
-
 import com.db4o.*;
 import bidixon.hiitmix.R;
 import bidixon.hiitmix.domain.*;
 import android.os.Bundle;
 import android.app.*;
-import android.content.Context;
+import android.content.*;
 import android.view.*;
 import android.widget.*;
 
@@ -52,13 +51,15 @@ public class WorkoutListActivity extends Activity {
     		listView = (ListView) findViewById(R.id.workout_list);
     		View header = (View)getLayoutInflater().inflate(R.layout.header, null);
             
-    		Workout w = new Workout();
-    		Workout w1 = new Workout();
-    		Workout w2 = new Workout();
-    		Playlist p = new Playlist();
+    		Workout w = new Workout(this);
+    		Interval interval = new Interval(30, 50);
+    		Workout w1 = new Workout(this);
+    		Workout w2 = new Workout(this);
+    		HIITMixPlaylist p = new HIITMixPlaylist(null);
     		p.setName("Muzik");
     		
     		w.setName("I");
+    		w.add(interval);
     		w.addPlaylist(p);
     		db.store(w);
     		w1.setName("<3");

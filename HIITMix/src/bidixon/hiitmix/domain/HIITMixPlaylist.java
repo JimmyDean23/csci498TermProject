@@ -7,13 +7,16 @@ package bidixon.hiitmix.domain;
 
 import java.util.*;
 
-public class Playlist {
+import com.echonest.api.v4.*;
+
+public class HIITMixPlaylist extends com.echonest.api.v4.Playlist {
 	
-	private List<Track> tracks = null;
+	private List<Song> songs = null;
 	private String name = null;
 	
-	public Playlist() {
-		tracks = new ArrayList<Track>();
+	public HIITMixPlaylist(List<Song> s) {
+		super(s);
+		this.songs = s;
 	}
 	
 	public void setName(String name) {

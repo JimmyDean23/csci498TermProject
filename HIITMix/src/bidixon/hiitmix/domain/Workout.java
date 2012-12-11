@@ -6,16 +6,20 @@
 package bidixon.hiitmix.domain;
 
 import java.util.*;
+import android.content.*;
+import com.db4o.*;
 
 public class Workout {
 
 	private List<Interval> intervals = null;
-	private Playlist playlist = null;
+	private HIITMixPlaylist playlist = null;
 	private String name = null;
 	
-	public Workout() {
+	public Workout(Context c) {
 		intervals = new ArrayList<Interval>();
-		playlist = new Playlist();
+		playlist = new HIITMixPlaylist(null);
+		ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), 
+				c.getDir("data", 0) + "/workouts/" + name + ".db4o");
 	}
 	
 	public void add(Interval i) {
@@ -41,7 +45,7 @@ public class Workout {
 		return name;
 	}
 	
-	public void addPlaylist(Playlist playlist) {
+	public void addPlaylist(HIITMixPlaylist playlist) {
 		this.playlist = playlist;
 	}
 	
