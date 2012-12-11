@@ -5,8 +5,8 @@
 
 package bidixon.hiitmix.domain;
 
+import java.io.*;
 import java.util.*;
-import android.content.*;
 import com.db4o.*;
 
 public class Workout {
@@ -14,12 +14,13 @@ public class Workout {
 	private List<Interval> intervals = null;
 	private HIITMixPlaylist playlist = null;
 	private String name = null;
+	private String APPLICATION_DATA_PATH = null;
+	private ObjectContainer db = null;
 	
-	public Workout(Context c) {
+	public Workout(String APPLICATION_DATA_PATH) {
 		intervals = new ArrayList<Interval>();
 		playlist = new HIITMixPlaylist(null);
-		ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), 
-				c.getDir("data", 0) + "/workouts/" + name + ".db4o");
+		this.APPLICATION_DATA_PATH = APPLICATION_DATA_PATH;
 	}
 	
 	public void add(Interval i) {
@@ -38,7 +39,12 @@ public class Workout {
 	}
 	
 	public void setName(String name) {
+		// delete old database if it exists
+		if (this.name != null) { new File(APPLICATION_DATA_PATH + "workouts/" + this.name + ".db4o").delete(); }
+		
+		// change name and create new database
 		this.name = name;
+		db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), APPLICATION_DATA_PATH + "workouts/" + this.name + ".db4o");
 	}
 	
 	public String getName() {

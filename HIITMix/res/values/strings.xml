@@ -7,8 +7,9 @@
     <string name="save">Save</string>
     <string name="intensity">Intensity</string>
     <string name="duration">Duration</string>
-    <string name="notset">Click edit to add a playlist</string>
+    <string name="empty">Empty</string>
     <string name="workout">Workout</string>
     <string name="playlist">Playlist</string>
+    <string name="no_playlist">Click edit to add a playlist</string>
 
 </resources>

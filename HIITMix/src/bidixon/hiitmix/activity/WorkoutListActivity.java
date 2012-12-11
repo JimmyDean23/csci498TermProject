@@ -18,8 +18,10 @@ import android.widget.*;
 
 public class WorkoutListActivity extends Activity {
 
+	private String APPLICATION_DATA_PATH = null;	
 	private List<Workout> workouts = null;
 	private ListView listView = null;
+	private ObjectContainer db = null;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,35 +46,36 @@ public class WorkoutListActivity extends Activity {
 	}
 
     private void initializeList() {
-    	new File(this.getDir("data", 0) + "/WorkoutDatabase.db4o").delete();
-    	ObjectContainer db = Db4oEmbedded.openFile(Db4oEmbedded
-    	        .newConfiguration(), this.getDir("data", 0) + "/WorkoutDatabase.db4o");
+    	APPLICATION_DATA_PATH = this.getDir("data", 0) + "/";
+    	
+    	new File(APPLICATION_DATA_PATH + "WorkoutDatabase.db4o").delete();
+    	db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), APPLICATION_DATA_PATH + "WorkoutDatabase.db4o");
+    	
     	try {
     		listView = (ListView) findViewById(R.id.workout_list);
     		View header = (View)getLayoutInflater().inflate(R.layout.header, null);
             
-    		Workout w = new Workout(this);
-    		Interval interval = new Interval(30, 50);
-    		Workout w1 = new Workout(this);
-    		Workout w2 = new Workout(this);
+    		
+    		// testing stuff, will be removed
+    		Workout w = new Workout(APPLICATION_DATA_PATH);
+    		Workout w1 = new Workout(APPLICATION_DATA_PATH);
+    		Interval interval = new Interval(30, 50);    		
     		HIITMixPlaylist p = new HIITMixPlaylist(null);
     		p.setName("Muzik");
     		
-    		w.setName("I");
+    		w.setName(APPLICATION_DATA_PATH + "workouts/");
     		w.add(interval);
     		w.addPlaylist(p);
     		db.store(w);
-    		w1.setName("<3");
+    		w1.setName("meow");
     		db.store(w1);
-    		w2.setName("Jiyoon");
-    		db.store(w2);
     		
     		workouts = new ArrayList<Workout>();
     		List<Workout> list = db.query(Workout.class);
     		for (Workout i : list) {
     			workouts.add(i);
     		}
-    	    WorkoutAdapter adapter = new WorkoutAdapter(this, R.layout.row, workouts);
+    	    WorkoutAdapter adapter = new WorkoutAdapter(this, R.layout.workout_row, workouts);
     	    
     	    listView.addHeaderView(header, null, false);
     	    listView.setAdapter(adapter);
@@ -101,7 +104,7 @@ public class WorkoutListActivity extends Activity {
 	        
 	        if (row == null) {
 	        	LayoutInflater inflater = getLayoutInflater();
-	            row = inflater.inflate(R.layout.row, parent, false);
+	            row = inflater.inflate(R.layout.workout_row, parent, false);
 	            
 	            holder = new WorkoutHolder(row);
 	            
