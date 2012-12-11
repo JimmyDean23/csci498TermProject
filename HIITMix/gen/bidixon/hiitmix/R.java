@@ -35,9 +35,10 @@ public final class R {
         public static final int activity_playlist=0x7f030002;
         public static final int activity_timer=0x7f030003;
         public static final int activity_workout_list=0x7f030004;
-        public static final int header=0x7f030005;
+        public static final int interval_header=0x7f030005;
         public static final int interval_row=0x7f030006;
-        public static final int workout_row=0x7f030007;
+        public static final int workout_header=0x7f030007;
+        public static final int workout_row=0x7f030008;
     }
     public static final class menu {
         public static final int activity_workout_list=0x7f060000;

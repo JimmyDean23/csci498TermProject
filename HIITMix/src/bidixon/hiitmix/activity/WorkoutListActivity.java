@@ -15,10 +15,12 @@ import android.app.*;
 import android.content.*;
 import android.view.*;
 import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class WorkoutListActivity extends Activity {
 
-	private String APPLICATION_DATA_PATH = null;	
+	public final static String ID_EXTRA = "bidixon.hiitmix.activity._ID";
+	public static String APPLICATION_DATA_PATH = null;	
 	private List<Workout> workouts = null;
 	private ListView listView = null;
 	private ObjectContainer db = null;
@@ -53,7 +55,7 @@ public class WorkoutListActivity extends Activity {
     	
     	try {
     		listView = (ListView) findViewById(R.id.workout_list);
-    		View header = (View)getLayoutInflater().inflate(R.layout.header, null);
+    		View header = (View)getLayoutInflater().inflate(R.layout.workout_header, null);
             
     		
     		// testing stuff, will be removed
@@ -63,7 +65,7 @@ public class WorkoutListActivity extends Activity {
     		HIITMixPlaylist p = new HIITMixPlaylist(null);
     		p.setName("Muzik");
     		
-    		w.setName(APPLICATION_DATA_PATH + "workouts/");
+    		w.setName("cats");
     		w.add(interval);
     		w.addPlaylist(p);
     		db.store(w);
@@ -79,11 +81,21 @@ public class WorkoutListActivity extends Activity {
     	    
     	    listView.addHeaderView(header, null, false);
     	    listView.setAdapter(adapter);
+    	    listView.setOnItemClickListener(new OnItemClickListener() { 
+    	        @Override
+    	        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {            
+    	        	Intent i = new Intent(view.getContext(), IntervalListActivity.class);
+    	        	//Workout selected = new Workout(APPLICATION_DATA_PATH);
+    	        	//List<Workout> results = db.queryByExample(selected);
+    	    		i.putExtra(ID_EXTRA, String.valueOf(id));
+    	    		startActivity(i);                 
+    	        }
+    	    });
     	} finally {
     	    db.close();
     	}
 	}
-
+    
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_workout_list, menu);

@@ -5,7 +5,10 @@
 
 package bidixon.hiitmix.activity;
 
+import java.io.File;
 import java.util.*;
+
+import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import bidixon.hiitmix.R;
 import bidixon.hiitmix.domain.*;
@@ -29,18 +32,33 @@ public class IntervalListActivity extends Activity {
     }
 	
 	public void initializeList() {
-		listView = (ListView) findViewById(R.id.interval_list);
-		View header = (View)getLayoutInflater().inflate(R.layout.header, null);
-		
-		List<Interval> list = db.query(Interval.class);
-		for (Interval i : list) {
-			intervals.add(i);
-		}
-		
-		IntervalAdapter adapter = new IntervalAdapter(this, R.layout.interval_row, intervals);
-	    
-	    listView.addHeaderView(header, null, false);
-	    listView.setAdapter(adapter);
+		new File(WorkoutListActivity.APPLICATION_DATA_PATH + "IntervalDatabase.db4o").delete();
+    	db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), WorkoutListActivity.APPLICATION_DATA_PATH + "IntervalDatabase.db4o");
+    	
+    	try {		
+			listView = (ListView) findViewById(R.id.interval_list);
+			View header = (View)getLayoutInflater().inflate(R.layout.interval_header, null);
+			intervals = new ArrayList<Interval>();
+			
+			Interval i1 = new Interval(30, 50);
+			Interval i2 = new Interval(40, 60);
+			Interval i3 = new Interval(60, 80);
+			db.store(i1);
+			db.store(i2);
+			db.store(i3);
+			
+			List<Interval> list = db.query(Interval.class);
+			for (Interval i : list) {
+				intervals.add(i);
+			}
+	
+			IntervalAdapter adapter = new IntervalAdapter(this, R.layout.interval_row, intervals);
+		    
+		    listView.addHeaderView(header, null, false);
+		    listView.setAdapter(adapter);
+    	} finally {
+    	    db.close();
+    	}
 	}
 	
 	private class IntervalAdapter extends ArrayAdapter<Interval> {
@@ -67,8 +85,8 @@ public class IntervalListActivity extends Activity {
 	        }
 	        
 	        Interval interval_cursor = intervals.get(position);
-	        holder.intensity.setText(interval_cursor.getIntensity());
-	        holder.duration.setText(interval_cursor.getDuration());
+	        holder.intensity.setText(String.valueOf(interval_cursor.getIntensity()));
+	        holder.duration.setText(String.valueOf(interval_cursor.getDuration()));
 	        
 	        return row;
 		}
@@ -81,8 +99,8 @@ public class IntervalListActivity extends Activity {
         private TextView duration = null;
         
         public IntervalHolder(View row) {
-        	intensity = (TextView) row.findViewById(R.id.workout_name);
-        	duration = (TextView) row.findViewById(R.id.playlist_name);
+        	intensity = (TextView) row.findViewById(R.id.interval_intensity);
+        	duration = (TextView) row.findViewById(R.id.interval_duration);
 		}
         
     }

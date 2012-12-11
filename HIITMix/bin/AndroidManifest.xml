@@ -38,6 +38,9 @@
         <activity android:name="bidixon.hiitmix.activity.TimerActivity"
             android:label="@string/app_name">        
         </activity>
+        <activity android:name="bidixon.hiitmix.activity.IntervalListActivity"
+            android:label="@string/app_name">
+        </activity>
         
     </application>
 

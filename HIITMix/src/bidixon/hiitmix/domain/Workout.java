@@ -18,9 +18,11 @@ public class Workout {
 	private ObjectContainer db = null;
 	
 	public Workout(String APPLICATION_DATA_PATH) {
-		intervals = new ArrayList<Interval>();
-		playlist = new HIITMixPlaylist(null);
 		this.APPLICATION_DATA_PATH = APPLICATION_DATA_PATH;
+		
+		intervals = new ArrayList<Interval>();
+		addPlaylist(new HIITMixPlaylist(null));		
+		setName("New Workout");
 	}
 	
 	public void add(Interval i) {
@@ -40,11 +42,11 @@ public class Workout {
 	
 	public void setName(String name) {
 		// delete old database if it exists
-		if (this.name != null) { new File(APPLICATION_DATA_PATH + "workouts/" + this.name + ".db4o").delete(); }
+		//if (this.name != null) { new File(APPLICATION_DATA_PATH + "workouts/" + this.name + ".db4o").delete(); }
 		
 		// change name and create new database
 		this.name = name;
-		db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), APPLICATION_DATA_PATH + "workouts/" + this.name + ".db4o");
+		//db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), APPLICATION_DATA_PATH + "workouts/" + this.name + ".db4o");
 	}
 	
 	public String getName() {
